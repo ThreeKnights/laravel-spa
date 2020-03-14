@@ -9,22 +9,22 @@ window.VueAxios = require('vue-axios').default;
 
 window.Axios = require('axios').default;
 
-let AppLayout = require('./components/App.vue');
+let AppLayout = require('./components/App.vue').default;
 
 // Show the list of post 
-const Listpost = Vue.component('Listposts', require('./components/Listpost.vue'));
+const Listpost = Vue.component('Listposts', require('./components/Listpost.vue')).default;
 
 // add post template
-const Addpost = Vue.component('Addpost', require('./components/Addpost.vue'));
+const Addpost = Vue.component('Addpost', require('./components/Addpost.vue')).default;
 
 //edit post template 
-const Editpost = Vue.component('Editpost', require('./components/Editpost.vue'));
+const Editpost = Vue.component('Editpost', require('./components/Editpost.vue')).default;
 
 // delete post template 
-const Deletepost = Vue.component('Deletepost', require('./components/Deletepost.vue'));
+const Deletepost = Vue.component('Deletepost', require('./components/Deletepost.vue')).default;
 
 // view single post 
-const Viewpost = Vue.component('Viewpost', require('./components/Viewpost.vue'));
+const Viewpost = Vue.component('Viewpost', require('./components/Viewpost.vue')).default;
 
 
 
@@ -59,8 +59,8 @@ const routes = [
 ];
 
 const router = new VueRouter({
-    mode : history,
-    routes,
+    mode : 'history',
+    routes : routes,
 })
 
 new Vue (
