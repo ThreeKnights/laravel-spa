@@ -78,7 +78,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::find($id);
+
+        return $post;
     }
 
     /**
@@ -89,7 +91,9 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+
+        return $post;
     }
 
     /**
@@ -101,7 +105,32 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(),$this->validateRules());
+
+        $success = false;
+
+        if($validator->fails()){
+            return response()->json([
+                'success' => $success,
+                'errors' => $validator->message(),
+                'message' => "Something went wrong. Counld now Update the post "
+            ],200);
+        }
+        $post = Post::find($id);
+        DB::transaction(function () use($request, &$post, &$success) {
+            if($post->count()){
+                $post->update($request->all());
+                $success = $post->save();
+            }
+        });
+
+        return response()->json([
+            'success' => $success,
+            'data' => ($success) ? $post : null,
+            'message' => ($success) ? 'Post updated successfully' : 'Something went wrong'
+        ]);
+
+        
     }
 
     /**
@@ -112,6 +141,20 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post  = Post::find($id);
+        $success = false;
+
+        DB::transaction ( function () use(&$post, &$success){
+            if($post->count()) {
+                $post->delete();
+                $success = true;
+            }
+        });
+        
+        return response()->json([
+            'success' => $success,
+            'data' => ($success) ? $post : null,
+            'message' => ($success) ? 'Post updated successfully' : 'Something went wrong'
+        ]);
     }
 }

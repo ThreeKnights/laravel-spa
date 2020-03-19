@@ -29,7 +29,7 @@ export default {
         createPost : function () {
             let uri = 'http://localhost:8000/posts/';
             Axios.post(uri, this.post).then((response) => {
-            this.$router.push({name: 'Listpost'})
+                this.$router.push({name: 'Listpost'})
             })
         }
     }
